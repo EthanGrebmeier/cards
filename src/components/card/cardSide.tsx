@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import type { CSSProperties, ReactNode } from "react";
+import FlipCard from "./flipCard";
 
 type CardSideProps = {
   children: ReactNode;
@@ -16,11 +17,14 @@ const CardSide = ({ children, style, className }: CardSideProps) => {
         ...style,
       }}
       className={classNames(
-        "absolute flex h-full w-full flex-col items-center justify-start rounded-xl bg-[#DBD9DB] px-6 py-6 shadow-xl",
+        "absolute flex h-full w-full  rounded-xl bg-[#DBD9DB]  shadow-xl",
         className,
       )}
     >
-      {children}
+      <div className="relative flex h-full w-full flex-col items-center justify-start px-6 py-10">
+        <FlipCard />
+        {children}
+      </div>
     </div>
   );
 };

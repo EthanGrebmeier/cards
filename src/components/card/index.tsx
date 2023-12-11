@@ -7,6 +7,8 @@ import CardSide from "./cardSide";
 import CardBack from "./back";
 import { cardSchema } from "~/schemas/card";
 import { Card } from "~/types/card";
+import { cardFlippedAtom } from "~/atoms/card";
+import { useAtom, useAtomValue } from "jotai";
 
 const cardData = {
   front: {
@@ -69,7 +71,7 @@ type CardProps = {
 };
 
 const Card = ({ card }: CardProps) => {
-  const [flipped, setFlipped] = useState(false);
+  const flipped = useAtomValue(cardFlippedAtom);
 
   const parsedCardData = cardSchema.parse(cardData);
 
@@ -79,7 +81,6 @@ const Card = ({ card }: CardProps) => {
         <p>Name: {card?.name} </p>
         <p>Id: {card?.id} </p>
       </div>
-      <button onClick={() => setFlipped(!flipped)}>flip</button>
       <CardBackground
         style={{
           perspective: "1000px",

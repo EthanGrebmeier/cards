@@ -1,11 +1,11 @@
 import { bigint, index, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { relations, sql } from "drizzle-orm";
-import * as blocks from "./blocks/link";
 import { mysqlTable } from "../../tableCreator";
+import { links } from "./blocks/link";
 
 export const cards = mysqlTable(
-  "card",
+  "cards",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     name: varchar("name", { length: 256 }),
@@ -22,7 +22,5 @@ export const cards = mysqlTable(
 );
 
 export const cardsRelations = relations(cards, ({ many }) => ({
-  links: many(blocks.links),
+  links: many(links),
 }));
-
-export { blocks };

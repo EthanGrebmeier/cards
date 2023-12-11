@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../elements/button";
+import { Button } from "../ui/button";
 
 import useMode from "~/hooks/useMode";
 

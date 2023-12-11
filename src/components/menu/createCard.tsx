@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
-import { Button } from "../elements/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 
 const CreateCard = () => {

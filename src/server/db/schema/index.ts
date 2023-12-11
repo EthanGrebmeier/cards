@@ -9,7 +9,6 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 import { type AdapterAccount } from "next-auth/adapters";
-import * as cardSchema from "./cards";
 import { mysqlTable } from "../tableCreator";
 
 export const posts = mysqlTable(
@@ -100,6 +99,3 @@ export const verificationTokens = mysqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
-
-export const cards = cardSchema.cards;
-export const blocks = cardSchema.blocks;

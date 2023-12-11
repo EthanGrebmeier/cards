@@ -6,7 +6,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { cards } from "~/server/db/schema/cards";
+import { cards } from "~/server/db/schema/card";
 
 export const cardRouter = createTRPCRouter({
   create: publicProcedure
@@ -25,11 +25,28 @@ export const cardRouter = createTRPCRouter({
   }),
 
   getCard: publicProcedure
-    .input(z.object({ id: z.number().min(1) }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.cards.findFirst({
+    .input(z.object({ id: z.number().min(1), includeBlocks: z.boolean() }))
+    .query(async ({ ctx, input }) => {
+      const card = await ctx.db.query.cards.findFirst({
         where: (cards, { eq }) => eq(cards.id, input.id),
+        with: {
+          links: true,
+        },
       });
+
+      if (!card) {
+        return undefined;
+      }
+
+      return {
+        id: card.id,
+        name: card.name,
+        createdById: card.createdById,
+        createdAt: card.createdAt,
+        blocks: [
+          ...card.links.map((link) => ({ ...link, name: "link" as const })),
+        ],
+      };
     }),
 
   delete: publicProcedure

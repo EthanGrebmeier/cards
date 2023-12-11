@@ -1,14 +1,13 @@
-import type { z } from "zod";
-import type { blockSchemas } from "~/schemas/card/blocks";
 import Link from "./link";
+import type { Block} from "~/types/card";
 
 type BlockParserProps = {
-  block: z.infer<typeof blockSchemas>;
+  block: Block
 };
 
 const BlockParser = ({ block }: BlockParserProps) => {
   if (block.name === "link") {
-    return <Link {...block} />;
+    return <Link block={block} />;
   }
 
   return <div>Missing component</div>;

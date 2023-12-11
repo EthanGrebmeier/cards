@@ -1,9 +1,10 @@
 import CardSide from "./cardSide";
-import type { z } from "zod";
-import type { sideSchema } from "~/schemas/card";
 import BlockParser from "./blocks/blockParser";
+import type { Card } from "~/types/card";
 
-type CardBackProps = z.infer<typeof sideSchema>;
+type CardBackProps = {
+  blocks: Card["blocks"];
+};
 
 const CardBack = ({ blocks }: CardBackProps) => {
   return (

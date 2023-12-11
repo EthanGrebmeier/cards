@@ -16,7 +16,7 @@ const CardSide = ({ children, style, className }: CardSideProps) => {
         ...style,
       }}
       className={classNames(
-        "absolute flex h-full w-full flex-col items-center justify-start rounded-xl bg-[#DBD9DB] px-10 py-6 shadow-xl",
+        "absolute flex h-full w-full flex-col items-center justify-start rounded-xl bg-[#DBD9DB] px-6 py-6 shadow-xl",
         className,
       )}
     >

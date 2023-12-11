@@ -6,6 +6,7 @@ import CardFront from "./front";
 import CardSide from "./cardSide";
 import CardBack from "./back";
 import { cardSchema } from "~/schemas/card";
+import { Card } from "~/types/card";
 
 const cardData = {
   front: {
@@ -63,13 +64,21 @@ const userData = {
     "https://pm1.aminoapps.com/6759/e814f3473f6a0c2a480cfe2b8f4ab8b39bd7bdb2v2_00.jpg",
 };
 
-const Card = () => {
+type CardProps = {
+  card: Card;
+};
+
+const Card = ({ card }: CardProps) => {
   const [flipped, setFlipped] = useState(false);
 
   const parsedCardData = cardSchema.parse(cardData);
 
   return (
-    <>
+    <div>
+      <div className="absolute right-32 top-8 w-[300px] rounded-md bg-white px-2 py-4">
+        <p>Name: {card?.name} </p>
+        <p>Id: {card?.id} </p>
+      </div>
       <button onClick={() => setFlipped(!flipped)}>flip</button>
       <CardBackground
         style={{
@@ -84,10 +93,10 @@ const Card = () => {
           }}
         >
           <CardFront />
-          <CardBack blocks={parsedCardData.back.blocks} />
+          <CardBack blocks={card.blocks} />
         </div>
       </CardBackground>
-    </>
+    </div>
   );
 };
 

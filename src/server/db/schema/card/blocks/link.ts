@@ -1,6 +1,7 @@
 import {
   bigint,
   index,
+  int,
   smallint,
   timestamp,
   varchar,
@@ -10,13 +11,13 @@ import { relations, sql } from "drizzle-orm";
 import { cards } from "..";
 import { mysqlTable } from "~/server/db/tableCreator";
 
-export const linkThemes = mysqlTable("linkTheme", {
+export const linkThemes = mysqlTable("linkThemes", {
   id: smallint("id").primaryKey().autoincrement(),
   name: varchar("name", { length: 255 }),
 });
 
 export const links = mysqlTable(
-  "link",
+  "links",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     createdById: varchar("createdById", { length: 255 }).notNull(),
@@ -25,8 +26,9 @@ export const links = mysqlTable(
       .notNull(),
     updatedAt: timestamp("updatedAt").onUpdateNow(),
 
-    href: varchar("href", { length: 255 }),
-    text: varchar("text", { length: 255 }),
+    href: varchar("href", { length: 255 }).notNull(),
+    text: varchar("text", { length: 255 }).notNull(),
+    cardId: int("card_id").notNull(),
   },
   (example) => ({
     createdByIdIdx: index("createdById_idx").on(example.createdById),
@@ -34,8 +36,8 @@ export const links = mysqlTable(
 );
 
 export const linkRelations = relations(links, ({ one }) => ({
-  theme: one(linkThemes),
-  card: one(cards),
+  // linkThemes: one(linkThemes),
+  cards: one(cards, { fields: [links.cardId], references: [cards.id] }),
 }));
 
 export const themeRelation = relations(linkThemes, ({ many }) => ({
